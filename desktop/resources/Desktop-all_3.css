@@ -1,0 +1,90 @@
+.video {
+    background-image: url(images/gears.gif)
+}
+.bogus {
+    background-image: url(images/bogus.png ) !important
+}
+.notepad {
+    background-image: url(images/bogus.png ) !important
+}
+.logout {
+    background-image: url(images/logout.gif ) !important
+}
+.settings {
+    background-image: url(images/gears.gif ) !important
+}
+.icon-grid {
+    background-image: url(images/grid.png ) !important
+}
+.add {
+    background-image: url(../../shared/icons/add.png) !important
+}
+.option {
+    background-image: url(../../shared/icons/plugin.png) !important
+}
+.remove {
+    background-image: url(../../shared/icons/delete.png) !important
+}
+.save {
+    background-image: url(../../shared/icons/disk.png) !important
+}
+.accordion {
+    background-image: url(images/accordian.gif) !important
+}
+.tabs {
+    background-image: url(images/tabs.gif) !important
+}
+.user {
+    background-image: url(../../shared/icons/user.png ) !important
+}
+.user_gray {
+    background-image: url(../../shared/icons/user_gray.png ) !important
+}
+.user-add {
+    background-image: url(../../shared/icons/user_add.png) !important
+}
+.user-delete {
+    background-image: url(../../shared/icons/user_delete.png) !important
+}
+.connect {
+    background-image: url(../../shared/icons/connect.png) !important
+}
+.user-girl {
+    background-image: url(../../shared/icons/user_female.png) !important
+}
+.user-kid {
+    background-image: url(../../shared/icons/user_green.png) !important
+}
+.user-suit {
+    background-image: url(../../shared/icons/user_suit.png) !important
+}
+.music {
+    background-image: url(../../shared/icons/music.png) !important
+}
+.music-ico {
+    background-image: url(../../songslist/songslist.ico); background-size: 45px 45px !important
+}
+.tree-ico {
+    background-image: url(../../tree/tree.png); background-size: 52px 45px !important
+}
+.tree_small {
+    background-image: url(../../tree/tree.png); background-size: 10px 8px !important
+}
+.kichink-ico {
+    background-image: url(../../shop/icono_kichink.png); background-size: 47px 38px !important
+}
+.blogger-ico {
+    background-image: url(../../unadm/blog/favicon.ico); background-size: 47px 47px !important
+}
+.gorilas-big-ico {
+    background-image: url(../../gorilas/gorilas.png); background-size: 47px 47px !important
+}
+.gorilas-small-ico {
+    background-image: url(../../gorilas/favicon.ico) !important
+}
+.unadm-ico {
+    background-image: url(../../unadm/UnADM.png); background-size: 16px 9px !important
+}
+.unadm-big-ico {
+    background-image: url(../../unadm/UnADM.png); background-size: 48px 27px !important
+}

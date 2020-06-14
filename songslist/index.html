@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="songslist.ico">
+    <title>Songs List</title>
+</head>
+
+<body bgcolor='#F0F5FF' link='#FAFBFF' vlink='#B0B0C0' alink='#2CC7F4' style='overflow-x:hidden;' onresize='resize();'>
+    <style type="text/css">
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            background-color: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-image: -webkit-gradient(linear,
+            left top,
+            left bottom,
+            color-stop(0.44, rgb(122, 153, 217)),
+            color-stop(0.72, rgb(73, 125, 189)),
+            color-stop(0.86, rgb(28, 58, 148)));
+        }
+    </style>
+    <script type='text/javascript' src='songsList.js'></script>
+    <script type='text/javascript'>
+        var arr = [];
+        var opened = {};
+
+        var a1 = document.createElement('a');
+        a1.setAttribute('style', 'cursor: pointer;');
+        a1.innerHTML = 'Canción &#9650;';
+        a1.setAttribute('id', 'a1');
+        var a2 = document.createElement('a');
+        a2.setAttribute('style', 'cursor: pointer;');
+        a2.innerHTML = 'Artista';
+        a2.setAttribute('id', 'a2');
+        var a3 = document.createElement('a');
+        a3.setAttribute('style', 'cursor: pointer;');
+        a3.innerHTML = 'Año';
+        a3.setAttribute('id', 'a3');
+
+        function createTable() {
+            arr = [];
+            opened.id = undefined;
+            opened.originalColor = undefined;
+            opened.iframe = undefined;
+
+            var arr2 = [];
+            var lastCharCode1 = a1.innerHTML.charCodeAt(a1.innerHTML.length - 1);
+            var sort1 = lastCharCode1 == 9650 || lastCharCode1 == 9660;
+            var lastCharCode2 = a2.innerHTML.charCodeAt(a2.innerHTML.length - 1);
+            var sort2 = lastCharCode2 == 9650 || lastCharCode2 == 9660;
+            var lastCharCode3 = a3.innerHTML.charCodeAt(a3.innerHTML.length - 1);
+            var sort3 = lastCharCode3 == 9650 || lastCharCode3 == 9660; // No used yet
+            var body = document.body;
+            var table = document.createElement('table');
+            table.setAttribute('style', 'width:100%; display:block;');
+
+            var parInicial = true;
+            var parCancion = true;
+            var parArtista = true;
+            var parAnio = true;
+            var par = true;
+
+            var tdInicialCancionAnterior = null;
+            var tdCancionAnterior = null;
+            var tdInicialArtistaAnterior = null;
+            var tdArtistaAnterior = null;
+            var tdAnioAnterior = null;
+
+            for (var i = 0; i < songsList.length; i++) {
+                var sig = i + 1;
+                var ant = i - 1;
+                var contInicialNombre = 1;
+                var contInicialArtista = 1;
+                var contNombreIgual = 1;
+                var contArtistaIgual = 1;
+                var contAnioIgual = 1;
+                var flagInicialNombre = true;
+                var flagInicialArtista = true;
+                var flagNombreIgual = true;
+                var flagArtistaIgual = true;
+                var flagAnioIgual = true;
+
+                arr2 = [];
+
+                while (sig < songsList.length && (flagInicialNombre || flagInicialArtista || flagNombreIgual || flagArtistaIgual || flagAnioIgual)) {
+                    if (songsList[sig].nombre.charAt(0).toUpperCase() == songsList[i].nombre.charAt(0).toUpperCase() && flagInicialNombre) {
+                        contInicialNombre++;
+                    } else {
+                        flagInicialNombre = false;
+                    }
+                    if (songsList[sig].artista.charAt(0).toUpperCase() == songsList[i].artista.charAt(0).toUpperCase() && flagInicialArtista) {
+                        contInicialArtista++;
+                    } else {
+                        flagInicialArtista = false;
+                    }
+                    if (songsList[sig].nombre == songsList[i].nombre && flagNombreIgual) {
+                        contNombreIgual++;
+                    } else {
+                        flagNombreIgual = false;
+                    }
+                    if (songsList[sig].artista == songsList[i].artista && flagArtistaIgual) {
+                        contArtistaIgual++;
+                    } else {
+                        flagArtistaIgual = false;
+                    }
+                    if (songsList[sig].anio == songsList[i].anio && flagAnioIgual) {
+                        contAnioIgual++;
+                    } else {
+                        flagAnioIgual = false;
+                    }
+                    sig++;
+                }
+
+                var tr = table.insertRow();
+
+                var tdNumero = tr.insertCell();
+                tdNumero.setAttribute('id', 'tdNumero-' + i);
+                tdNumero.valor = '<a href = "https://www.google.com.mx/search?q=' + (songsList[i].nombre + "%20" + songsList[i].artista).replace(/ /g, "%20").replace(/&/g, "%26") + '" target="_blank">' + (i + 1) + '</a>';
+                tdNumero.innerHTML = tdNumero.valor;
+                var originalColor = getColor(i);
+                tdNumero.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; width:35px;');
+                tdNumero.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+                tdNumero.style.background = tdNumero.attributes.originalgradient.value;
+                tdNumero.setAttribute('onMouseOver', 'mouseOver(this)');
+                arr2.push(tdNumero);
+                if (sort1 && ((ant >= 0 && songsList[i].nombre.charAt(0).toUpperCase() != songsList[ant].nombre.charAt(0).toUpperCase()) || ant == -1)) {
+                    var tdInicialCancion = tr.insertCell();
+                    tdInicialCancion.setAttribute('id', 'tdInicialCancion-' + i);
+                    var originalColor = getColorInicial(parInicial);
+                    tdInicialCancion.innerHTML = setVertical(songsList[i].nombre.charAt(0).toUpperCase());
+                    tdInicialCancion.setAttribute('rowspan', contInicialNombre);
+                    tdInicialCancion.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; width:25px;');
+                    tdInicialCancion.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+                    tdInicialCancion.style.background = tdInicialCancion.attributes.originalgradient.value;
+                    tdInicialCancion.setAttribute('onMouseOver', 'mouseOver(this)');
+                    arr2.push(tdInicialCancion);
+                    tdInicialCancionAnterior = tdInicialCancion;
+                    parInicial = !parInicial;
+                } else {
+                    if (tdInicialCancionAnterior != null) {
+                        arr2.push(tdInicialCancionAnterior);
+                    }
+                }
+
+                if ((ant >= 0 && songsList[i].nombre != songsList[ant].nombre) || ant == -1) {
+                    var tdCancion = tr.insertCell();
+                    tdCancion.setAttribute('id', 'tdCancion-' + i);
+                    var originalColor = getColorCelda(i);
+                    tdCancion.valor = songsList[i].nombre;
+                    tdCancion.innerHTML = tdCancion.valor;
+                    tdCancion.setAttribute('rowspan', contNombreIgual);
+                    tdCancion.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px; text-align: left; color: #000099;');
+                    var gradient = 'linear-gradient(';
+                    for (var j = 0; j < contNombreIgual; j++) {
+                        gradient += getColorCelda(i + j);
+                        if (j == 0) {
+                            gradient += (',' + getColorCelda(i + j));
+                        }
+                        if (j == (contNombreIgual - 1)) {
+                            gradient += (',' + getColorCelda(i + j));
+                        } else {
+                            gradient += ',';
+                        }
+                    }
+                    gradient += ')';
+                    tdCancion.setAttribute('originalgradient', gradient);
+                    tdCancion.style.background = tdCancion.attributes.originalgradient.value;
+                    tdCancion.setAttribute('onMouseOver', 'mouseOver(this)');
+                    arr2.push(tdCancion);
+                    tdCancionAnterior = tdCancion;
+                    parCancion = !parCancion;
+                } else {
+                    if (tdCancionAnterior != null) {
+                        arr2.push(tdCancionAnterior);
+                    }
+                }
+
+                if (sort2 && ((ant >= 0 && songsList[i].artista.charAt(0).toUpperCase() != songsList[ant].artista.charAt(0).toUpperCase()) || ant == -1)) {
+                    var tdInicialArtista = tr.insertCell();
+                    tdInicialArtista.setAttribute('id', 'tdInicialArtista-' + i);
+                    var originalColor = getColorInicial(parInicial);
+                    tdInicialArtista.innerHTML = setVertical(songsList[i].artista.charAt(0).toUpperCase());
+                    tdInicialArtista.setAttribute('rowspan', contInicialArtista);
+                    tdInicialArtista.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; width:25px;');
+                    tdInicialArtista.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+                    tdInicialArtista.style.background = tdInicialArtista.attributes.originalgradient.value;
+                    tdInicialArtista.setAttribute('onMouseOver', 'mouseOver(this)');
+                    arr2.push(tdInicialArtista);
+                    tdInicialArtistaAnterior = tdInicialArtista;
+                    parInicial = !parInicial;
+                } else {
+                    if (tdInicialArtistaAnterior != null) {
+                        arr2.push(tdInicialArtistaAnterior);
+                    }
+                }
+
+                if ((ant >= 0 && songsList[i].artista != songsList[ant].artista) || ant == -1) {
+                    var tdArtista = tr.insertCell();
+                    tdArtista.setAttribute('id', 'tdArtista-' + i);
+                    var originalColor = getColorCelda(i);
+                    tdArtista.valor = songsList[i].artista;
+                    tdArtista.innerHTML = tdArtista.valor;
+                    tdArtista.setAttribute('rowspan', contArtistaIgual);
+                    tdArtista.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px; text-align: left; color: #000099;');
+                    var gradient = 'linear-gradient(';
+                    for (var j = 0; j < contArtistaIgual; j++) {
+                        gradient += getColorCelda(i + j);
+                        if (j == 0) {
+                            gradient += (',' + getColorCelda(i + j));
+                        }
+                        if (j == (contArtistaIgual - 1)) {
+                            gradient += (',' + getColorCelda(i + j));
+                        } else {
+                            gradient += ',';
+                        }
+                    }
+                    gradient += ')';
+                    tdArtista.setAttribute('originalgradient', gradient);
+                    tdArtista.style.background = tdArtista.attributes.originalgradient.value;
+                    tdArtista.setAttribute('onMouseOver', 'mouseOver(this)');
+                    arr2.push(tdArtista);
+                    tdArtistaAnterior = tdArtista;
+                    parArtista = !parArtista;
+                } else {
+                    if (tdArtistaAnterior != null) {
+                        arr2.push(tdArtistaAnterior);
+                    }
+                }
+
+                if ((ant >= 0 && songsList[i].anio != songsList[ant].anio) || ant == -1) {
+                    var tdAnio = tr.insertCell();
+                    tdAnio.setAttribute('id', 'tdAnio-' + i);
+                    var originalColor = getColorCelda(i);
+                    tdAnio.valor = songsList[i].anio;
+                    if (contAnioIgual === 1) {
+                        tdAnio.innerHTML = tdAnio.valor;
+                    } else {
+                        tdAnio.innerHTML = setVertical(tdAnio.valor);
+                    }
+                    tdAnio.setAttribute('rowspan', contAnioIgual);
+                    tdAnio.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px; text-align: center; color: #000099; width:55px;');
+                    var gradient = 'linear-gradient(';
+                    for (var j = 0; j < contAnioIgual; j++) {
+                        gradient += getColorCelda(i + j);
+                        if (j == 0) {
+                            gradient += (',' + getColorCelda(i + j));
+                        }
+                        if (j == (contAnioIgual - 1)) {
+                            gradient += (',' + getColorCelda(i + j));
+                        } else {
+                            gradient += ',';
+                        }
+                    }
+                    gradient += ')';
+                    tdAnio.setAttribute('originalgradient', gradient);
+                    tdAnio.style.background = tdAnio.attributes.originalgradient.value;
+                    tdAnio.setAttribute('onMouseOver', 'mouseOver(this)');
+                    arr2.push(tdAnio);
+                    tdAnioAnterior = tdAnio;
+                    parAnio = !parAnio;
+                } else {
+                    if (tdAnioAnterior != null) {
+                        arr2.push(tdAnioAnterior);
+                    }
+                }
+
+                var tdVideo = tr.insertCell();
+                tdVideo.setAttribute('id', 'tdVideo-' + i);
+                var button = document.createElement("BUTTON");
+                var originalColor = getColorCelda(i);
+                button.innerHTML = "Video";
+                button.setAttribute('id', 'button-' + i);
+                button.setAttribute('style', 'cursor: pointer; background-color: transparent; font-weight: bold; font-family: "DejaVu Sans"; border-color: #000050; color: #000050;');
+                button.setAttribute('onclick', 'createIframe("' + i + '", "' + songsList[i].yt + '", "' + originalColor + '", 1)');
+                tdVideo.setAttribute('style', 'text-align: center; color: #FAFBFF; width: 14%;');
+                tdVideo.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + originalColor + ')');
+                tdVideo.style.background = tdVideo.attributes.originalgradient.value;
+                tdVideo.setAttribute('onMouseOver', 'mouseOver(this)');
+                tdVideo.appendChild(button);
+
+                arr2.push(tdVideo);
+                arr.push(arr2);
+
+                par = !par;
+            }
+
+            table.tBodies[0].setAttribute('style', 'display: table; width: 100%; table-layout: fixed;');
+
+            var header = table.createTHead();
+            header.setAttribute('style', 'display:block; position:sticky; top:0px; background-color:#F0F5FF; z-index:1000;');
+
+            var tr = header.insertRow(0);
+            tr.setAttribute('style', 'display:table; width:100%; table-layout:fixed;');
+            var th = document.createElement('th');
+            var originalColor = '#000040';
+            th.innerHTML = 'Songs List';
+            th.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; width:100%;');
+            th.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+            th.style.background = th.attributes.originalgradient.value;
+            th.setAttribute('onMouseOver', 'mouseOver(this)');
+            if (sort1 || sort2) {
+                th.setAttribute('colspan', '6');
+            } else {
+                th.setAttribute('colspan', '5');
+            }
+            arr2.push(th);
+            tr.appendChild(th);
+
+            arr.push(arr2);
+
+            arr2 = [];
+
+            var tr = header.insertRow(1);
+            tr.setAttribute('style', 'display:table; width:100%; table-layout:fixed;');
+            var th = document.createElement('th');
+            th.setAttribute('id', 'thNumero');
+            th.innerHTML = '#';
+            th.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; width:35px;');
+            th.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+            th.style.background = th.attributes.originalgradient.value;
+            th.setAttribute('onMouseOver', 'mouseOverColumn(this)');
+            arr2.push(th);
+            tr.appendChild(th);
+
+            if (sort1) {
+                var th = document.createElement('th');
+                th.setAttribute('id', 'thCancionInicial');
+                th.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; cursor: pointer; width:25px;');
+                th.setAttribute('onclick', 'sortTable(\'nombre\')');
+                th.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+                th.style.background = th.attributes.originalgradient.value;
+                th.setAttribute('onMouseOver', 'mouseOverColumn(this)');// TODO fix
+                arr2.push(th);// qué hace?
+                tr.appendChild(th);
+            }
+
+            var th = document.createElement('th');
+            th.setAttribute('id', 'thCancion');
+            th.appendChild(a1);
+            th.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; cursor: pointer;');
+            th.setAttribute('onclick', 'sortTable(\'nombre\')');
+            th.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+            th.style.background = th.attributes.originalgradient.value;
+            th.setAttribute('onMouseOver', 'mouseOverColumn(this)');
+
+            arr2.push(th);
+            tr.appendChild(th);
+
+            if (sort2) {
+                var th = document.createElement('th');
+                th.setAttribute('id', 'thArtistaInicial');
+                th.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; cursor: pointer; width:25px;');
+                th.setAttribute('onclick', 'sortTable(\'artista\')');
+                th.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+                th.style.background = th.attributes.originalgradient.value;
+                th.setAttribute('onMouseOver', 'mouseOverColumn(this)');// TODO fix
+                arr2.push(th);// qué hace?
+                tr.appendChild(th);
+            }
+
+            var th = document.createElement('th');
+            th.setAttribute('id', 'thArtista');
+            th.appendChild(a2);
+            th.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; cursor: pointer;');
+            th.setAttribute('onclick', 'sortTable(\'artista\')');
+            th.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+            th.style.background = th.attributes.originalgradient.value;
+            th.setAttribute('onMouseOver', 'mouseOverColumn(this)');
+
+            arr2.push(th);
+            tr.appendChild(th);
+
+            var th = document.createElement('th');
+            th.setAttribute('id', 'thAnio');
+            th.appendChild(a3);
+            th.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; cursor: pointer; width:55px;');
+            th.setAttribute('onclick', 'sortTable(\'anio\')');
+            th.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+            th.style.background = th.attributes.originalgradient.value;
+            th.setAttribute('onMouseOver', 'mouseOverColumn(this)');
+            arr2.push(th);
+            tr.appendChild(th);
+
+            var th = document.createElement('th');
+            th.setAttribute('id', 'thVideo');
+            th.innerHTML = 'Video &#x1F504;';
+            th.setAttribute('style', 'font-family:"DejaVu Sans", "Trebuchet MS", sans-serif; font-weight: bold; padding: 6px;text-align: center; color:#FAFBFF; cursor: pointer; width: 14%;');
+            th.setAttribute('onclick', 'randomize()');
+            th.setAttribute('originalgradient', 'linear-gradient(' + originalColor + ',' + oscurecer(originalColor, 25, 15, 25) + ')');
+            th.style.background = th.attributes.originalgradient.value;
+            th.setAttribute('onMouseOver', 'mouseOverColumn(this)');
+            arr2.push(th);
+            tr.appendChild(th);
+
+            arr.push(arr2);
+            body.appendChild(table);
+        }
+
+        var sortBy = function(field, desc) {
+            return function(a, b) {
+                var keyA = a[field].toUpperCase();
+                var keyB = b[field].toUpperCase();
+                var ret = (desc ? -1 : 1) * ((keyA > keyB) - (keyB > keyA));
+                if (ret == 0) {
+                    if (field === 'anio') {
+                        keyA = a['artista'].toUpperCase();
+                        keyB = b['artista'].toUpperCase();
+                        ret = ((keyA > keyB) - (keyB > keyA));
+                        if (ret == 0) {
+                            keyA = a['nombre'].toUpperCase();
+                            keyB = b['nombre'].toUpperCase();
+                            ret = ((keyA > keyB) - (keyB > keyA));
+                        }
+                    } else if (field === 'nombre') {
+                        keyA = a['anio'].toUpperCase();
+                        keyB = b['anio'].toUpperCase();
+                        ret = ((keyA > keyB) - (keyB > keyA));
+                        if (ret == 0) {
+                            keyA = a['artista'].toUpperCase();
+                            keyB = b['artista'].toUpperCase();
+                            ret = ((keyA > keyB) - (keyB > keyA));
+                        }
+                    } else {
+                        keyA = a['anio'].toUpperCase();
+                        keyB = b['anio'].toUpperCase();
+                        ret = ((keyA > keyB) - (keyB > keyA));
+                        if (ret == 0) {
+                            keyA = a['nombre'].toUpperCase();
+                            keyB = b['nombre'].toUpperCase();
+                            ret = ((keyA > keyB) - (keyB > keyA));
+                        }
+                    }
+                }
+                return ret;
+            }
+        }
+
+        var sortTable = function(field) {
+            if (field == 'nombre') {
+                if (a1.innerHTML.charCodeAt(a1.innerHTML.length - 1) == 9650) {
+                    songsList.sort(sortBy('nombre', true));
+                    a1.innerHTML = 'Canción &#9660;';
+                } else {
+                    songsList.sort(sortBy('nombre', false));
+                    a1.innerHTML = 'Canción &#9650;';
+                }
+                a2.innerHTML = 'Artista';
+                a3.innerHTML = 'Año';
+            } else if (field == 'artista') {
+                if (a2.innerHTML.charCodeAt(a2.innerHTML.length - 1) == 9650) {
+                    songsList.sort(sortBy('artista', true));
+                    a2.innerHTML = 'Artista &#9660;';
+                } else {
+                    songsList.sort(sortBy('artista', false));
+                    a2.innerHTML = 'Artista &#9650;';
+                }
+                a1.innerHTML = 'Canción';
+                a3.innerHTML = 'Año';
+            } else if (field == 'anio') {
+                if (a3.innerHTML.charCodeAt(a3.innerHTML.length - 1) == 9650) {
+                    songsList.sort(sortBy('anio', true));
+                    a3.innerHTML = 'Año &#9660;';
+                } else {
+                    songsList.sort(sortBy('anio', false));
+                    a3.innerHTML = 'Año &#9650;';
+                }
+                a1.innerHTML = 'Canción';
+                a2.innerHTML = 'Artista';
+            }
+            var tables = document.body.getElementsByTagName('TABLE');
+            for (var i = 0; i < tables.length; i++) {
+                document.body.removeChild(tables[i]);
+            }
+            createTable();
+            window.scrollTo(0, 0);
+        }
+
+        var randomize = function() {
+            var tables = document.body.getElementsByTagName('TABLE');
+            for (var i = 0; i < tables.length; i++) {
+                document.body.removeChild(tables[i]);
+            }
+            a1.innerHTML = 'Canción';
+            a2.innerHTML = 'Artista';
+            a3.innerHTML = 'Año';
+            for (var i = 0; i < songsList.length; i++) {
+                var r = Math.floor((Math.random() * songsList.length));
+                var temp = songsList[i];
+                songsList[i] = songsList[r];
+                songsList[r] = temp;
+            }
+            createTable();
+            createIframe(0, songsList[0].yt, getColorCelda(0), 0);
+            window.scrollTo(0, 0);
+        }
+
+        function changeVideoWidth(w) {
+            document.getElementById('thVideo').style.width = w;
+            for (var i = 0; i < songsList.length; i++) {
+                document.getElementById('tdVideo-' + i).style.width = w;
+            }
+        }
+
+        function createIframe(id, url, originalColor, auto) {
+            var button = document.getElementById('button-' + id);
+            if (button.innerHTML == 'Video') {
+                var td = document.getElementById('tdVideo-' + id);
+                button.innerHTML = 'X';
+                button.setAttribute('style', 'cursor: pointer; float: right; -moz-box-shadow:inset 0px 39px 0px -24px #e67a73; -webkit-box-shadow:inset 0px 39px 0px -24px #e67a73; box-shadow:inset 0px 39px 0px -24px #e67a73; background-color:#e4685d; -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; border:1px solid #000000; display:inline-block; cursor:pointer; color:#ffffff; font-family:"DejaVu Sans"; font-size:15px; font-weight: bold; padding:2px 6px; text-decoration:none; text-shadow:0px 1px 0px #b23e35;');
+                td.setAttribute('style', 'text-align: center; background-color: #000000;');
+                td.style.background = '#000000';
+                changeVideoWidth('50%');
+                var iframe = document.createElement('iframe');
+                iframe.setAttribute('id', 'iframe' + id);
+                iframe.setAttribute('src', 'https://www.youtube.com/embed/' + url + '?color=white&rel=0&showinfo=0&autoplay=' + auto);
+                iframe.setAttribute('width', td.offsetWidth - 10);
+                iframe.setAttribute('height', iframe.width * 480 / 854 + 50);
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('allowfullscreen', 'true');
+                td.appendChild(document.createElement('br'));
+                td.appendChild(iframe);
+                close(opened.id, opened.originalColor, true);
+                opened.id = id;
+                opened.originalColor = originalColor;
+                opened.iframe = iframe;
+                verticalize(true);
+            } else if (button.innerHTML == 'X') {
+                close(id, originalColor, false);
+            }
+        }
+
+        function close(id, originalColor, fromOutside) {
+            if (opened.id !== undefined) {
+                var iframe = document.getElementById('iframe' + id);
+                var button = document.getElementById('button-' + id);
+                var td = document.getElementById('tdVideo-' + id);
+                var breaks = iframe.parentNode.getElementsByTagName('BR');
+                for (var i = 0; i < breaks.length; i++) {
+                    iframe.parentNode.removeChild(breaks[i]);
+                }
+                iframe.parentNode.removeChild(iframe);
+                button.innerHTML = 'Video';
+                button.setAttribute('style', 'cursor: pointer; background-color: transparent; font-weight: bold; font-family: "DejaVu Sans"; border-color: #000050; color: #000050;');
+                td.style['text-align'] = 'center';
+                if (fromOutside) {
+                    td.style.background = 'linear-gradient(' + originalColor + ', ' + originalColor + ')';
+                } else {
+                    td.style.background = 'linear-gradient(' + oscurecer(originalColor, 25, 15, 25) + ', ' + oscurecer(originalColor, 25, 15, 25) + ')';
+                    changeVideoWidth('14%');
+                }
+                verticalize(false);
+            }
+            opened.id = undefined;
+            opened.originalColor = undefined;
+            opened.iframe = undefined;
+        }
+
+        function verticalize(vertical) {
+            var tdNumero = document.getElementById('tdNumero-' + opened.id);
+            var tdAnio = document.getElementById('tdAnio-' + opened.id);
+            if (vertical) {
+                tdNumero.innerHTML = setVertical(tdNumero.valor);
+                if(tdAnio && tdAnio.rowSpan === 1) {
+                    tdAnio.innerHTML = setVertical(tdAnio.valor);
+                }
+            } else {
+                tdNumero.innerHTML = tdNumero.valor;
+                if(tdAnio && tdAnio.rowSpan === 1) {
+                    tdAnio.innerHTML = tdAnio.valor;
+                }
+            }
+        }
+
+        function setVertical(s) {
+            return '<div style="-ms-transform: rotate(270deg); -webkit-transform: rotate(270deg); transform: rotate(270deg);">' + s + '</div>';
+        }
+
+        function getColorInicial(par) {
+            return par ? "#0443AC" : "#00287D";
+        }
+
+        function getColorCelda(i) {
+            var rMax = 0xE1;
+            var rMin = 0x97;
+            var rDif = Math.abs(rMax - rMin);
+            var gMax = 0xEB;
+            var gMin = 0xB9;
+            var gDif = Math.abs(gMax - gMin);
+            var bMax = 0xFF;
+            var bMin = 0xFF;
+            var bDif = Math.abs(bMax - bMin);
+
+            var rate = 5;
+            var color = '#';
+
+            if (i % (2 * rate) > i % rate) {
+                var r = Math.round(rMin + rDif * (i % rate) / rate).toString(16);
+                var g = Math.round(gMin + gDif * (i % rate) / rate).toString(16);
+                var b = Math.round(bMin + bDif * (i % rate) / rate).toString(16);
+            } else {
+                var r = Math.round(rMax - rDif * (i % rate) / rate).toString(16);
+                var g = Math.round(gMax - gDif * (i % rate) / rate).toString(16);
+                var b = Math.round(bMax - bDif * (i % rate) / rate).toString(16);
+            }
+
+            for (i = 0; i < 2 - r.length; i++) {
+                color += '0';
+            }
+            color += r;
+
+            for (i = 0; i < 2 - g.length; i++) {
+                color += '0';
+            }
+            color += g;
+
+            for (i = 0; i < 2 - b.length; i++) {
+                color += '0';
+            }
+            color += b;
+
+            return color.toUpperCase();
+        }
+
+        function oscurecer(originalColor, r, g, b) {
+            var r = parseInt('0x' + originalColor.substring(1, 3)) - r;
+            var g = parseInt('0x' + originalColor.substring(3, 5)) - g;
+            var b = parseInt('0x' + originalColor.substring(5, 7)) - b;
+
+            if (r < 0) {
+                r = 0;
+            }
+
+            if (g < 0) {
+                g = 0;
+            }
+
+            if (b < 0) {
+                b = 0;
+            }
+
+            r = r.toString(16);
+            g = g.toString(16);
+            b = b.toString(16);
+
+            var color = '#';
+
+            for (i = 0; i < 2 - r.length; i++) {
+                color += '0';
+            }
+
+            color += r;
+
+            for (i = 0; i < 2 - g.length; i++) {
+                color += '0';
+            }
+
+            color += g;
+
+            for (i = 0; i < 2 - b.length; i++) {
+                color += '0';
+            }
+
+            color += b;
+
+            return color.toUpperCase();
+        }
+
+        function getColor(r) {
+            var color = '#';
+            var s = '';
+            var rate = 10;
+            var r2 = Math.round(r * rate);
+            if (r2 > 2 * 0xFF) {
+                while (r2 > 2 * 0xFF) {
+                    r2 -= 2 * 0xFF;
+                }
+                return getColor(r2 / rate);
+            }
+            if (r2 > 0xFF) {
+                s = (2 * 0xFF - r2).toString(16);
+            } else {
+                s = r2.toString(16);
+            }
+            for (i = 0; i < 6 - s.length; i++) {
+                color += '0';
+            }
+            return (color + s).toUpperCase();
+        }
+
+        function componentToHex(c) {
+            var hex = parseInt(c).toString(16);
+            return hex.length == 1 ? "0" + hex : hex;
+        }
+
+        function mouseOver(t) {
+            var indexes = indexesOf(t);
+            var r = 25;
+            var g = 15;
+            var b = 25;
+            if (t.id.startsWith('tdInicial')) {
+                r *= 2;
+                g *= 2;
+                b *= 2;
+            } else if (t.rowSpan > 1) {
+                r = parseInt(r * 1.6);
+                g = parseInt(g * 1.6);
+                b = parseInt(b * 1.6);
+            }
+            for (var i = 0; i < arr.length; i++) {
+                var arrI = arr[i];
+                for (var j = 0; j < arrI.length; j++) {
+                    var arrIJ = arrI[j];
+                    if (!arrIJ.id.startsWith('tdVideo') || arrIJ.children[0].innerText != 'X') {
+                        arrIJ.style.background = arrIJ.attributes.originalgradient.value;
+                    }
+                }
+            }
+            for (var i = 0; i < indexes.length; i++) {
+                var arrIndexes = arr[indexes[i]];
+                for (var j = 0; j < arrIndexes.length; j++) {
+                    var arrIndexesJ = arrIndexes[j];
+                    if (arrIndexesJ.id.startsWith('tdInicialCancion') || arrIndexesJ.id.startsWith('tdInicialArtista')) {
+                        changeBackground(arrIndexesJ, parseInt(r * 1.3), parseInt(g * -1.4), parseInt(b * 1.2));
+                    } else if (arrIndexesJ.id.startsWith('tdNumero')) {
+                        changeBackground(arrIndexesJ, parseInt(r * 3.5), parseInt(g * -2.8), parseInt(b * 1.5));
+                    } else {
+                        changeBackground(arrIndexesJ, r, g, b);
+                    }
+                }
+            }
+        }
+
+        function mouseOverColumn(t) {
+            mouseOver(t);
+            for (var i = 0; i < arr.length; i++) {
+                var arrI = arr[i];
+                for (var j = 0; j < arrI.length; j++) {
+                    var arrIJ = arrI[j];
+                    if (t.id == 'thNumero') {
+                        if (arrIJ.id.startsWith('tdNumero')) {
+                            changeBackground(arrIJ, -50, 20, 55);
+                        }
+                    } else if (t.id == 'thCancion') {
+                        if (arrIJ.id.startsWith('tdInicialCancion')) {
+                            changeBackground(arrIJ, -50, 20, 55);
+                        } else if (arrIJ.id.startsWith('tdCancion')) {
+                            changeBackground(arrIJ, 10, 20, 15);
+                        }
+                    } else if (t.id == 'thArtista') {
+                        if (arrIJ.id.startsWith('tdInicialArtista')) {
+                            changeBackground(arrIJ, -50, 20, 55);
+                        } else if (arrIJ.id.startsWith('tdArtista')) {
+                            changeBackground(arrIJ, 10, 20, 15);
+                        }
+                    } else if (t.id == 'thVideo') {
+                        if (arrIJ.id.startsWith('tdVideo')) {
+                            changeBackground(arrIJ, 10, 20, 15);
+                        }
+                    } else if (t.id == 'thAnio') {
+                        if (arrIJ.id.startsWith('tdAnio')) {
+                            changeBackground(arrIJ, 10, 20, 15);
+                        }
+                    }
+                }
+            }
+            changeBackground(t, -30, 10, 25);
+        }
+
+        function changeBackground(x, r, g, b) {
+            var backgroundColors = x.attributes.originalgradient.value.replace('linear-gradient(', '').replace(')', '').split(',');
+            var gradient = 'linear-gradient(';
+            if (x.id.startsWith('tdVideo') && x.children[0].innerText == 'X') {
+                gradient += '#000000,#000000';
+            } else {
+                for (var k = 0; k < backgroundColors.length; k++) {
+                    gradient += oscurecer(backgroundColors[k], r, g, b);
+                    if (k != (backgroundColors.length - 1)) {
+                        gradient += (',');
+                    }
+                }
+            }
+            gradient += ')';
+            x.style.background = gradient;
+        }
+
+        function indexesOf(obj) {
+            var indexes = [];
+            for (var i = 0; i < arr.length; i++) {
+                for (var j = 0; j < arr[i].length; j++) {
+                    if (arr[i].indexOf(obj) != -1 && indexes.indexOf(i) == -1) {
+                        indexes.push(i);
+                    }
+                }
+            }
+            return indexes;
+        }
+
+        function resize() {
+            if(opened.iframe) {
+                opened.iframe.setAttribute('width', document.getElementById('tdVideo-' + opened.id).offsetWidth - 10);
+                opened.iframe.setAttribute('height', opened.iframe.width * 480 / 854 + 50);
+            }
+        }
+
+        window.onbeforeunload = function() {
+            scrollTo(0,0);
+        };
+
+        randomize();
+    </script>
+</body>
+</html>

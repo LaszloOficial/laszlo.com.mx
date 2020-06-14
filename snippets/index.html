@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<title>Snippets</title>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../lib/bootstrap-3.3.7-dist/css/solar/bootstrap.min.css">
+  <script src="../lib/jquery/jquery-3.2.1.min.js"></script>
+  <script src="../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <script src="../lib/growl/javascripts/jquery.growl.js"></script>
+  <link rel="stylesheet" href="../lib/growl/stylesheets/jquery.growl.css">
+  <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="container">
+	<h2>Snippets</h2>
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">File to String</a>
+			</h4>
+		</div>
+		<div id="collapse1" class="panel-collapse collapse">
+			<div class="panel-body">
+				<textarea rows="9" readonly class="js-copytextarea1" style="resize: none; border: none; width: 100%;">
+public String fileToString(File f) throws IOException {
+    try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+        final StringBuilder sb = new StringBuilder();
+        String sCurrentLine;
+        while ((sCurrentLine = br.readLine()) != null) {
+            sb.append(sCurrentLine);
+        }
+        return sb.toString();
+    }
+}</textarea>
+				<button type="button" class="btn btn-default pull-right" onclick="copy(1);">
+					<span class="text-center">
+						<i class="fa fa-Files-o"></i>&nbsp;Copy to clipboard
+					</span>
+				</button>
+			</div>
+		</div>
+		</div>
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">String to new File</a>
+			</h4>
+		</div>
+		<div id="collapse2" class="panel-collapse collapse">
+			<div class="panel-body">
+				<textarea rows="6" readonly class="js-copytextarea2" style="resize: none; border: none; width: 100%;">
+public void stringToNewFile(String s, File f) throws IOException {
+    if(f.exists()) {
+        f.delete();
+    }
+    Files.write(f.toPath(), s.getBytes(), StandardOpenOption.CREATE);
+}</textarea>
+				<button type="button" class="btn btn-default pull-right" onclick="copy(2);">
+					<span class="text-center">
+						<i class="fa fa-Files-o"></i>&nbsp;Copy to clipboard
+					</span>
+				</button>
+			</div>
+		</div>
+		</div>
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Append String to existing File</a>
+			</h4>
+		</div>
+		<div id="collapse3" class="panel-collapse collapse">
+			<div class="panel-body">
+				<textarea rows="3" readonly class="js-copytextarea3" style="resize: none; border: none; width: 100%;">
+public void appendStringToExistingFile(String s, File f) throws IOException {
+    Files.write(f.toPath(), s.getBytes(), StandardOpenOption.APPEND);
+}</textarea>
+				<button type="button" class="btn btn-default pull-right" onclick="copy(3);">
+					<span class="text-center">
+						<i class="fa fa-Files-o"></i>&nbsp;Copy to clipboard
+					</span>
+				</button>
+			</div>
+		</div>
+		</div>
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Copy File</a>
+			</h4>
+		</div>
+		<div id="collapse4" class="panel-collapse collapse">
+			<div class="panel-body">
+				<textarea rows="3" readonly class="js-copytextarea4" style="resize: none; border: none; width: 100%;">
+public void copyFile(File source, File dest) throws IOException {
+    Files.copy(source.toPath(), dest.toPath());
+}</textarea>
+				<button type="button" class="btn btn-default pull-right" onclick="copy(4);">
+					<span class="text-center">
+						<i class="fa fa-Files-o"></i>&nbsp;Copy to clipboard
+					</span>
+				</button>
+			</div>
+		</div>
+		</div>
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Move File</a>
+			</h4>
+		</div>
+		<div id="collapse5" class="panel-collapse collapse">
+			<div class="panel-body">
+				<textarea rows="3" readonly class="js-copytextarea5" style="resize: none; border: none; width: 100%;">
+public void moveFile(File source, File dest) throws IOException {
+    Files.move(source.toPath(), dest.toPath());
+}</textarea>
+				<button type="button" class="btn btn-default pull-right" onclick="copy(5);">
+					<span class="text-center">
+						<i class="fa fa-Files-o"></i>&nbsp;Copy to clipboard
+					</span>
+				</button>
+			</div>
+		</div>
+		</div>
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Download File</a>
+			</h4>
+		</div>
+		<div id="collapse6" class="panel-collapse collapse">
+			<div class="panel-body">
+				<textarea rows="5" readonly class="js-copytextarea6" style="resize: none; border: none; width: 100%;">
+public void downloadFile(URL fromUrl, File toFile) throws IOException {
+    try (final ReadableByteChannel rbc = Channels.newChannel(fromUrl.openStream()); final FileOutputStream fos = new FileOutputStream(toFile)) {
+        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+    }
+}</textarea>
+				<button type="button" class="btn btn-default pull-right" onclick="copy(6);">
+					<span class="text-center">
+						<i class="fa fa-Files-o"></i>&nbsp;Copy to clipboard
+					</span>
+				</button>
+			</div>
+		</div>
+		</div>
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse7">Zip Files</a>
+			</h4>
+		</div>
+		<div id="collapse7" class="panel-collapse collapse">
+			<div class="panel-body">
+				<textarea rows="21" readonly class="js-copytextarea7" style="resize: none; border: none; width: 100%;">
+public void zipFiles(File toFile, File... files) throws IOException {
+	final byte[] buffer = new byte[1024];
+  	try(FileOutputStream fos = new FileOutputStream(toFile); ZipOutputStream zos = new ZipOutputStream(fos);) {
+  		Arrays.stream(files).forEach(file -> {
+  			try {
+    			final ZipEntry ze= new ZipEntry(file.getName());
+        		zos.putNextEntry(ze);
+        		try(FileInputStream in = new FileInputStream(file)) {
+	        		int len;
+	        		while((len = in.read(buffer)) > 0) {
+	        			zos.write(buffer, 0, len);
+	        		}
+        		}
+        		zos.closeEntry();
+  			} catch(IOException e) {
+  				throw new UncheckedIOException(e);
+  			}
+  		});
+  		System.out.println("Done");
+  	}
+}</textarea>
+				<button type="button" class="btn btn-default pull-right" onclick="copy(7);">
+					<span class="text-center">
+						<i class="fa fa-Files-o"></i>&nbsp;Copy to clipboard
+					</span>
+				</button>
+			</div>
+		</div>
+		</div>
+		<!--div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse8">Unzip Files</a>
+			</h4>
+		</div>
+		<div id="collapse8" class="panel-collapse collapse">
+			<div class="panel-body">
+				<textarea rows="9" readonly class="js-copytextarea8" style="resize: none; border: none; width: 100%;">
+public void unzipFiles(String fromFile, File... files ???) throws IOException {
+
+}</textarea>
+				<button type="button" class="btn btn-default pull-right" onclick="copy(8);">
+					<span class="text-center">
+						<i class="fa fa-Files-o"></i>&nbsp;Copy to clipboard
+					</span>
+				</button>
+			</div>
+		</div>
+		</div-->
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse9">Take a Screenshot</a>
+			</h4>
+		</div>
+		<div id="collapse9" class="panel-collapse collapse">
+					<div class="panel-body">
+				<textarea rows="3" readonly class="js-copytextarea9" style="resize: none; border: none; width: 100%;">
+public void takeScreenshot(File dest) throws IOException, HeadlessException, AWTException {
+    ImageIO.write(new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize())), "png", dest);
+}</textarea>
+				<button type="button" class="btn btn-default pull-right" onclick="copy(9);">
+					<span class="text-center">
+						<i class="fa fa-Files-o"></i>&nbsp;Copy to clipboard
+					</span>
+				</button>
+			</div>
+		</div>
+		</div>
+	</div>
+	</div>
+	<script>
+		var copy = function(index) {
+			document.querySelector('.js-copytextarea' + index).select();
+			try {
+				var successful = document.execCommand('copy');
+				var msg = successful ? 'successful' : 'unsuccessful';
+				$.growl.notice({ message: 'Copying text command was ' + msg });
+			} catch (err) {
+				$.growl.error({ message: 'Oops, unable to copy' });
+			}
+		}
+	</script>
+</body>
+</html>

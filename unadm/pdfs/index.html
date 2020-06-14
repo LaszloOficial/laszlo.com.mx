@@ -1,0 +1,683 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>UnADM</title>
+    <style>
+        .pdf-file {
+            background-image: url(../../shared/moreicons/pdf.png) !important
+        }
+    </style>
+</head>
+<link rel="stylesheet" type="text/css" href="../../lib/ext-6.5.2/build/classic/theme-neptune/resources/theme-neptune-all.css">
+<link rel="stylesheet" type="text/css" href="../../lib/ext-6.5.2/build/packages/charts/classic/neptune/resources/charts-all.css">
+<link rel="stylesheet" type="text/css" href="../../lib/ext-6.5.2/build/packages/ux/classic/neptune/resources/ux-all.css">
+<script type="text/javascript" src="../../lib/ext-6.5.2/build/ext-all.js"></script>
+<script type="text/javascript" src="../../lib/ext-6.5.2/build/classic/theme-neptune/theme-neptune.js"></script>
+<script type="text/javascript" src="../../lib/ext-6.5.2/build/packages/ux/classic/ux.js"></script>
+<script type="text/javascript" src="../../lib/ext-6.5.2/build/packages/charts/classic/charts.js"></script>
+<script type="text/javascript">
+    Ext.onReady(function() {
+        var datesArray = [];
+        var store = Ext.create('Ext.data.TreeStore', {
+            root: {
+                text: textFormatter('UnADM'),
+                expanded: false,
+                children: [{
+                    text: textFormatter('Ingeniería en Desarrollo de Software'),
+                    expanded: false,
+                    children: [{
+                        text: createHrefBlank('Mapa curricular', './ingenieria_en_desarollo_de_software/ING_DESARROLLO_SOFTWARE.pdf'),
+                        iconCls: 'pdf-file',
+                        leaf: true
+                    }, {
+                        text: textFormatter('Módulo 1 - Formación Básica'),
+                        expanded: false,
+                        children: [{
+                            text: textFormatter('Primer Semestre'),
+                            expanded: false,
+                            children: [{
+                                text: textFormatter('Bloque 1'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Contexto socioeconómico de México'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('U1_fundamentos_para_el_estudio_de_la_estructura_socioeconomica_de_mexico.pdf', './ingenieria_en_desarollo_de_software/modulo1/1er_semestre/bloque1/contexto_socioeconomico_de_mexico/unidad1/U1_fundamentos_para_el_estudio_de_la_estructura_socioeconomica_de_mexico.pdf'),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Estadística básica'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Fundamentos de programación'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }]
+                            }, {
+                                text: textFormatter('Bloque 2'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Cálculo diferencial'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Desarrollo humano'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Fundamentos de investigación'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }]
+                            }]
+                        }, {
+                            text: textFormatter('Segundo Semestre'),
+                            expanded: false,
+                            children: [{
+                                text: textFormatter('Bloque 1'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Análisis y diseño orientado a objetos'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Sistemas operativos'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Cálculo integral'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }]
+                            }, {
+                                text: textFormatter('Bloque 2'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Fundamentos de administración'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Bases de datos'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Programación orientada a objetos I'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }, {
+                        text: textFormatter('Módulo 2 - Formación Disciplinar'),
+                        expanded: false,
+                        children: [{
+                            text: textFormatter('Tercer Semestre'),
+                            expanded: false,
+                            children: [{
+                                text: textFormatter('Bloque 1'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Diseño de bases de datos'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Modelado de negocios'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Programación orientada a objetos II'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }]
+                            }, {
+                                text: textFormatter('Bloque 2'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Introducción a la ingeniería de software'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Matemáticas discretas'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Programación de sistemas operativos'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }]
+                            }]
+                        }, {
+                            text: textFormatter('Cuarto Semestre'),
+                            expanded: false,
+                            children: [{
+                                text: textFormatter('Bloque 1'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Estructura de datos'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Habilidades del pensamiento'),
+                                    expanded: false,
+                                    children: [{
+                                        text: createHrefBlank('Información general de la asignatura', ''),
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 1', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 2', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }, {
+                                        text: createHrefBlank('Unidad 3', ''),
+                                        expanded: false,
+                                        iconCls: 'pdf-file',
+                                        leaf: true
+                                    }]
+                                }, {
+                                    text: textFormatter('Métodos y modelos de desarrollo de software'),
+                                    expanded: false
+                                }]
+                            }, {
+                                text: textFormatter('Bloque 2'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Administración de bases de datos'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Diseño y arquitectura de software'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Programación orientada a objetos III'),
+                                    expanded: false
+                                }]
+                            }]
+                        }]
+                    }, {
+                        text: textFormatter('Módulo 3 - Formación Disciplinar'),
+                        expanded: false,
+                        children: [{
+                            text: textFormatter('Quinto Semestre'),
+                            expanded: false,
+                            children: [{
+                                text: textFormatter('Bloque 1'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Estructura organizacional'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Investigación de operaciones'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Programación net I'),
+                                    expanded: false
+                                }]
+                            }, {
+                                text: textFormatter('Bloque 2'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Fundamentos de redes'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Métricas de desarrollo de software (PSP)'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Planeación estratégica'),
+                                    expanded: false
+                                }]
+                            }]
+                        }, {
+                            text: textFormatter('Sexto Semestre'),
+                            expanded: false,
+                            children: [{
+                                text: textFormatter('Bloque 1'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Administración de proyectos de información'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Ingeniería económica'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Interconectividad de redes'),
+                                    expanded: false
+                                }]
+                            }, {
+                                text: textFormatter('Bloque 2'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Desarrollo de software en equipo (TSP)'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Modelos de calidad de software'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Programación net II'),
+                                    expanded: false
+                                }]
+                            }]
+                        }]
+                    }, {
+                        text: textFormatter('Módulo 4 - Formación Profesional'),
+                        expanded: false,
+                        children: [{
+                            text: textFormatter('Séptimo Semestre'),
+                            expanded: false,
+                            children: [{
+                                text: textFormatter('Bloque 1'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Gestión de tecnologías de información'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Programación net III'),
+                                    expanded: false
+                                }]
+                            }, {
+                                text: textFormatter('Bloque 2'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Proyectos de inversión'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Programación web I'),
+                                    expanded: false
+                                }]
+                            }]
+                        }, {
+                            text: textFormatter('Octavo Semestre'),
+                            expanded: false,
+                            children: [{
+                                text: textFormatter('Bloque 1'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Pruebas y mantenimiento de sistemas de software'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Programación web II'),
+                                    expanded: false
+                                }]
+                            }, {
+                                text: textFormatter('Bloque 2'),
+                                expanded: false,
+                                children: [{
+                                    text: textFormatter('Programación móvil'),
+                                    expanded: false
+                                }, {
+                                    text: textFormatter('Seguridad de la informática'),
+                                    expanded: false
+                                }]
+                            }]
+                        }]
+                    }]
+                }]
+            }
+        });
+        Ext.create('Ext.tree.Panel', {
+            width: '100%',
+            height: '100%',
+            renderTo: Ext.getBody(),
+            collapsible: false,
+            useArrows: true,
+            border: false,
+            rootVisible: true,
+            multiSelect: false,
+            store: store
+        });
+
+        function textFormatter(s) {
+            return '<span style=\"color:#15428B;font-weight:bold\">' + s + '</span>';
+        };
+
+        function createHrefBlank(t, l) {
+            return '<a href="' + l + '" target="_blank">' + textFormatter(t) + '</a>';
+        };
+    });
+</script>
+<body>
+</body>
+</html>
